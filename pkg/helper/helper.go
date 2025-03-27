@@ -14,7 +14,8 @@ import (
 func HashPassword(password string) (string, error) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 	if err != nil {
-		return "", err
+		logger.Log.Error("Failed to generate password hash")
+		return "", errors.New(errors.ErrInternalServer, "failed to generate password hash")
 	}
 	return string(hashedPassword), nil
 }
