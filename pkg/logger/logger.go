@@ -22,6 +22,7 @@ const (
 	WARN
 	ERROR
 	CRITICAL
+	FATAL
 )
 
 type Logger struct {
@@ -87,9 +88,11 @@ func (l *Logger) log(level LogLevel, message string, ctx context.Context, contex
 
 	logContext := make(map[string]any)
 
-	requestID := GetRequestID(ctx)
-	if requestID != "unknown" {
-		logContext["request_id"] = requestID
+	if ctx != nil {
+		requestID := GetRequestID(ctx)
+		if requestID != "unknown" {
+			logContext["request_id"] = requestID
+		}
 	}
 
 	// Add global context tags
@@ -160,30 +163,36 @@ func (l *Logger) getLevelString(level LogLevel) string {
 		return "ERROR"
 	case CRITICAL:
 		return "CRITICAL"
+	case FATAL:
+		return "FATAL"
 	default:
 		return "UNKNOWN"
 	}
 }
 
 // Convenience methos for different log levels
-func (l *Logger) Debug(ctx context.Context, message string, context ...map[string]any) {
-	l.log(DEBUG, message, ctx, context...)
+func (l *Logger) Debug(message string, context ...map[string]any) {
+	l.log(DEBUG, message, nil, context...)
 }
 
-func (l *Logger) Info(ctx context.Context, message string, context ...map[string]any) {
-	l.log(INFO, message, ctx, context...)
+func (l *Logger) Info(message string, context ...map[string]any) {
+	l.log(INFO, message, nil, context...)
 }
 
-func (l *Logger) Warn(ctx context.Context, message string, context ...map[string]any) {
-	l.log(WARN, message, ctx, context...)
+func (l *Logger) Warn(message string, context ...map[string]any) {
+	l.log(WARN, message, nil, context...)
 }
 
-func (l *Logger) Error(ctx context.Context, message string, context ...map[string]any) {
-	l.log(ERROR, message, ctx, context...)
+func (l *Logger) Error(message string, context ...map[string]any) {
+	l.log(ERROR, message, nil, context...)
 }
 
-func (l *Logger) Critical(ctx context.Context, message string, context ...map[string]any) {
-	l.log(CRITICAL, message, ctx, context...)
+func (l *Logger) Critical(message string, context ...map[string]any) {
+	l.log(CRITICAL, message, nil, context...)
+}
+
+func (l *Logger) Fatal(message string, context ...map[string]any) {
+	l.log(FATAL, message, nil, context...)
 }
 
 // Utility to shorten file path

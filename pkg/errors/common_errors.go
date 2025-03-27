@@ -3,14 +3,28 @@ package errors
 // Some common codes that can be used
 
 const (
-	ErrNotFound        = "NOT_FOUND"
-	ErrUserNotFound    = "USER_NOT_FOUND"
-	ErrStatusNotFound  = "STATUS_NOT_FOUND"
+	// User-related errors
+	ErrStatusNotFound     = "NOT_FOUND"
+	ErrUserNotFound       = "USER_NOT_FOUND"
+	ErrInvalidCredentials = "INVALID_CREDENTIALS"
+	ErrInvalidUsername    = "INVALID_USERNAME_FORMAT"
+	ErrWeakPassword       = "WEAK_PASSWORD"
+	ErrEmailExists        = "EMAIL_ALREADY_EXISTS"
+	ErrInvalidEmail       = "INVALID_EMAIL_FORMAT"
+
+	// Backend errors
 	ErrDBError         = "DB_ERROR"
 	ErrValidationError = "VALIDATION_ERROR"
-	ErrUnauthorized    = "UNAUTHORIZED"
-	ErrForbidden       = "FORBIDDEN"
-	ErrInternalServer  = "INTERNAL_SERVER_ERROR"
+
+	// General errors
+	ErrBadRequest          = "BAD_REQUEST"
+	ErrConflict            = "CONFLICT_DETECTED"
+	ErrOrderStatusNotFound = "ORDER_STATUS_NOT_FOUND"
+
+	// Authentication & Authorization errors
+	ErrUnauthorized   = "UNAUTHORIZED"
+	ErrForbidden      = "FORBIDDEN"
+	ErrInternalServer = "INTERNAL_SERVER_ERROR"
 )
 
 func UserNotFound(message string) *CustomError {

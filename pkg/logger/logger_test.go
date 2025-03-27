@@ -3,7 +3,7 @@ package logger_test
 import (
 	"testing"
 
-	"github.com/your-username/logger"
+	"github.com/cheezecakee/go-backend-utils/pkg/logger"
 )
 
 func BenchmarkMapCopy(b *testing.B) {
@@ -15,7 +15,7 @@ func BenchmarkMapCopy(b *testing.B) {
 
 	// Benchmark the WithTags method
 	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		l.WithTags(tags)
 	}
 }
