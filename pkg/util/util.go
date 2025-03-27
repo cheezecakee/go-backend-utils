@@ -16,8 +16,8 @@ var (
 	GetRequestID  = logger.GetRequestID
 
 	// Error handling
-	NewErrors  = errors.New
-	WrapErrors = errors.Wrap
+	NewError  = errors.New
+	WrapError = errors.Wrap
 	// Common error types
 	UserNotFound        = errors.UserNotFound
 	StatusNotFound      = errors.StatusNotFound
