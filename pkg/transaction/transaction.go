@@ -13,15 +13,15 @@ import (
 //		DB() *sql.DB
 //	}
 type BaseRepository struct {
-	db *sql.DB
+	DB *sql.DB
 }
 
 func NewBaseRepository(db *sql.DB) *BaseRepository {
-	return &BaseRepository{db: db}
+	return &BaseRepository{DB: db}
 }
 
 func (r *BaseRepository) WithTransaction(ctx context.Context, fn func(tx *sql.Tx) error) error {
-	tx, err := r.db.BeginTx(ctx, nil)
+	tx, err := r.DB.BeginTx(ctx, nil)
 	if err != nil {
 		logger.Log.Error("Failed to begin transaction", map[string]any{
 			"error": err.Error(),
