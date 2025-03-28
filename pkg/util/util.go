@@ -8,6 +8,8 @@ import (
 	"github.com/cheezecakee/go-backend-utils/pkg/transaction"
 )
 
+type BaseRepository = transaction.BaseRepository
+
 var (
 	// Logger
 	Log = logger.Log
@@ -43,7 +45,6 @@ var (
 
 	// Transaction
 	NewBaseRepository = transaction.NewBaseRepository
-	BaseRepository    = transaction.BaseRepository{}
 )
 
 const (
