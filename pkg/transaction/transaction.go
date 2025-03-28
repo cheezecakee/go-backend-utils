@@ -7,15 +7,21 @@ import (
 	"github.com/cheezecakee/go-backend-utils/pkg/logger"
 )
 
-type BaseRepository struct {
+type BaseRepository interface {
+	WithTransaction(ctx context.Context, fn func(tx *sql.Tx) error) error
+
+	DB() *sql.DB
+}
+
+type baseRepository struct {
 	db *sql.DB
 }
 
-func NewBaseRepository(db *sql.DB) *BaseRepository {
-	return &BaseRepository{db: db}
+func NewBaseRepository(db *sql.DB) BaseRepository {
+	return &baseRepository{db: db}
 }
 
-func (r *BaseRepository) WithTransaction(ctx context.Context, fn func(tx *sql.Tx) error) error {
+func (r *baseRepository) WithTransaction(ctx context.Context, fn func(tx *sql.Tx) error) error {
 	tx, err := r.db.BeginTx(ctx, nil)
 	if err != nil {
 		logger.Log.Error("Failed to begin transaction", map[string]any{
@@ -47,4 +53,8 @@ func (r *BaseRepository) WithTransaction(ctx context.Context, fn func(tx *sql.Tx
 	}
 
 	return tx.Commit()
+}
+
+func (r *baseRepository) DB() *sql.DB {
+	return r.db
 }
