@@ -43,6 +43,7 @@ var (
 
 	// Transaction
 	NewBaseRepository = transaction.NewBaseRepository
+	BaseRepository    = transaction.BaseRepository{}
 )
 
 const (
